@@ -1,0 +1,532 @@
+<!DOCTYPE html>
+<html lang="en">
+
+  <head>
+    <meta charset="UTF-8">
+    <title>NSFW</title>
+    
+
+  </head>
+    
+  <body>
+  <!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width,initial-scale=1" />
+<title>Black & Orange Cards — For You</title>
+
+<!-- Fonts -->
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;800&display=swap" rel="stylesheet">
+
+<style>
+  :root{
+    --bg:#050505;
+    --panel:#0b0b0b;
+    --accent:#ff7a00; /* orange */
+    --accent-2:#ff9900;
+    --muted: #bfbfbf;
+    --glass: rgba(255,255,255,0.03);
+    --card-w: 220px;
+    --card-h: 300px;
+    --gap: 18px;
+    --shadow: 0 10px 30px rgba(0,0,0,0.6);
+  }
+
+  *{box-sizing:border-box}
+  html,body{height:100%}
+  body{
+    margin:0;
+    background:
+      radial-gradient(1200px 600px at 10% 10%, rgba(255,122,0,0.035), transparent 6%),
+      radial-gradient(900px 450px at 90% 90%, rgba(255,153,0,0.02), transparent 6%),
+      var(--bg);
+    color:var(--muted);
+    font-family:Inter,system-ui,-apple-system,Segoe UI,Roboto,"Helvetica Neue",Arial;
+    -webkit-font-smoothing:antialiased;
+    -moz-osx-font-smoothing:grayscale;
+    padding:32px;
+    display:flex;
+    align-items:flex-start;
+    justify-content:center;
+    gap:24px;
+    min-height:100vh;
+  }
+
+  /* Page frame */
+  .frame{
+    width:100%;
+    max-width:1200px;
+    background: linear-gradient(180deg, rgba(255,255,255,0.02), rgba(0,0,0,0.02));
+    border-radius:18px;
+    padding:28px;
+    box-shadow: 0 6px 40px rgba(0,0,0,0.5);
+    border: 1px solid rgba(255,122,0,0.06);
+    position:relative;
+    overflow:hidden;
+  }
+
+  header{
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    margin-bottom:20px;
+    gap:12px;
+  }
+
+  .title{
+    display:flex;
+    align-items:center;
+    gap:14px;
+  }
+
+  .logo{
+    width:56px;
+    height:56px;
+    border-radius:12px;
+    background: linear-gradient(135deg, var(--accent), var(--accent-2));
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    color:#111;
+    font-weight:800;
+    font-size:18px;
+    box-shadow: 0 6px 20px rgba(255,122,0,0.12), inset 0 -6px 18px rgba(0,0,0,0.18);
+  }
+
+  h1{
+    margin:0;
+    font-size:20px;
+    color:white;
+    letter-spacing:0.2px;
+  }
+  p.lead{
+    margin:0;
+    color:var(--muted);
+    font-size:13px;
+  }
+
+  /* board */
+  .board{
+    display:grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap:var(--gap);
+    align-items:center;
+    justify-items:center;
+    padding:14px 6px 22px;
+  }
+
+  /* responsiveness */
+  @media (max-width:980px){
+    .board{grid-template-columns: repeat(3, 1fr)}
+  }
+  @media (max-width:700px){
+    .board{grid-template-columns: repeat(2, 1fr)}
+    :root{--card-w:180px;--card-h:250px}
+  }
+  @media (max-width:420px){
+    .board{grid-template-columns: repeat(1, 1fr)}
+    :root{--card-w:300px; --card-h:360px}
+  }
+
+  /* flipping card */
+  .card{
+    width:var(--card-w);
+    height:var(--card-h);
+    perspective:1200px;
+    -webkit-perspective:1200px;
+    cursor:pointer;
+    position:relative;
+  }
+
+  .card-inner{
+    width:100%;
+    height:100%;
+    transition: transform 700ms cubic-bezier(.2,.9,.3,1);
+    transform-style:preserve-3d;
+    position:relative;
+    border-radius:14px;
+    box-shadow: var(--shadow);
+    will-change: transform;
+  }
+
+  .card.is-flipped .card-inner{
+    transform: rotateY(180deg) translateZ(0);
+  }
+
+  .card-face{
+    position:absolute;
+    inset:0;
+    backface-visibility:hidden;
+    -webkit-backface-visibility:hidden;
+    border-radius:14px;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    padding:18px;
+    overflow:hidden;
+  }
+
+  .card-front{
+    background: linear-gradient(180deg, rgba(255,255,255,0.02), rgba(255,122,0,0.02));
+    border: 1px solid rgba(255,122,0,0.08);
+    color:white;
+    transform: translateZ(0);
+    display:flex;
+    flex-direction:column;
+    gap:8px;
+  }
+
+  .card-front .num{
+    font-weight:800;
+    font-size:30px;
+    color:var(--accent-2);
+    text-shadow: 0 6px 22px rgba(255,122,0,0.06);
+  }
+  .card-front .label{
+    color:var(--muted);
+    font-size:13px;
+  }
+
+  .card-back{
+    background:
+      linear-gradient(180deg, rgba(255,122,0,0.06), rgba(0,0,0,0.08)),
+      linear-gradient(90deg, rgba(0,0,0,0.12), rgba(255,122,0,0.03));
+    transform: rotateY(180deg);
+    color:white;
+    text-align:left;
+    font-size:14px;
+    line-height:1.45;
+    display:flex;
+    flex-direction:column;
+    gap:10px;
+  }
+
+  /* decorative corner accent on front */
+  .corner{
+    position:absolute;
+    top:10px;
+    right:10px;
+    width:44px;
+    height:44px;
+    border-radius:10px;
+    background: linear-gradient(180deg, rgba(255,122,0,0.14), rgba(255,153,0,0.06));
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    font-weight:700;
+    color:#111;
+    font-size:13px;
+  }
+
+  /* hover lift & subtle shine */
+  .card:hover .card-inner{ transform: translateY(-8px) rotateX(0deg); transition: transform 400ms cubic-bezier(.2,.9,.3,1) }
+  .card:active .card-inner{ transform: translateY(-3px) }
+
+  /* entrance animation */
+  .card { opacity:0; transform: translateY(18px) scale(0.99); }
+  .card.intro { animation: popIn 700ms cubic-bezier(.2,.9,.3,1) forwards; }
+  @keyframes popIn {
+    to { opacity:1; transform: translateY(0) scale(1); }
+  }
+
+  /* small animated orbs in background */
+  .orb{
+    position:absolute;
+    border-radius:999px;
+    filter: blur(24px);
+    opacity:0.12;
+    pointer-events:none;
+    transform: translate3d(0,0,0);
+  }
+  .orb.o1{ width:420px; height:420px; left:-120px; top:-80px; background:linear-gradient(90deg, rgba(255,122,0,0.35), rgba(255,153,0,0.12)); animation: floaty 12s ease-in-out infinite; }
+  .orb.o2{ width:300px; height:300px; right:-120px; bottom:-80px; background:linear-gradient(90deg, rgba(255,153,0,0.22), rgba(255,122,0,0.06)); animation: floaty 16s ease-in-out infinite reverse; }
+  @keyframes floaty { 0% { transform:translateY(0) } 50% { transform:translateY(18px) } 100% { transform:translateY(0) } }
+
+  /* tiny focus outline for accessibility */
+  .card:focus{ outline: none; }
+  .card:focus-visible .card-inner{ box-shadow: 0 0 0 4px rgba(255,122,0,0.09), var(--shadow) }
+
+  /* small helper */
+  .hint{
+    font-size:12px;
+    color:var(--muted);
+    display:flex;
+    gap:8px;
+    align-items:center;
+    margin-left:auto;
+  }
+
+  /* pretty scrollbar (for long back content) */
+  .card-back::-webkit-scrollbar{ width:8px; }
+  .card-back::-webkit-scrollbar-thumb{ background: rgba(255,122,0,0.12); border-radius:8px; }
+</style>
+</head>
+<body>
+  <div class="frame" role="main" aria-label="Twelve Cards">
+    <header>
+      <div class="title">
+        <div class="logo">U</div>
+        <div>
+          <h1>12 Arousals</h1>
+          <p class="lead">Tap any card to flip.</p>
+        </div>
+      </div>
+
+      <div class="hint" aria-hidden="true">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" style="opacity:.9"><path d="M12 2v4M12 18v4M4.9 4.9l2.8 2.8M16.3 16.3l2.8 2.8M2 12h4M18 12h4M4.9 19.1l2.8-2.8M16.3 7.7l2.8-2.8" stroke="url(#g)" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        <span>Click or press enter/space</span>
+      </div>
+    </header>
+
+    <div class="board" id="board" aria-live="polite">
+      <!-- 12 cards: each .card contains front/back. Replace content inside .card-back .content with your text. -->
+      <!-- We'll programmatically number them, but include content placeholders now. -->
+      <!-- Card template repeated 12 times -->
+      <!-- Copy/paste these and replace content as you wish -->
+      <div class="card" tabindex="0" role="button" aria-pressed="false" data-index="1">
+        <div class="card-inner">
+          <div class="card-face card-front">
+            <div class="corner">❤</div>
+            <div class="num">1</div>
+            <div class="label">Kissing</div>
+          </div>
+          <div class="card-face card-back">
+            <div class="content" contenteditable="false" style="width:100%;height:100%;overflow:auto;">
+              <!-- put your text here for card 1 -->
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="card" tabindex="0" role="button" aria-pressed="false" data-index="2">
+        <div class="card-inner">
+          <div class="card-face card-front">
+            <div class="corner">✦</div>
+            <div class="num">2</div>
+            <div class="label">Tap to reveal</div>
+          </div>
+          <div class="card-face card-back">
+            <div class="content"></div>
+          </div>
+        </div>
+      </div>
+
+      <div class="card" tabindex="0" role="button" aria-pressed="false" data-index="3">
+        <div class="card-inner">
+          <div class="card-face card-front">
+            <div class="corner">∞</div>
+            <div class="num">3</div>
+            <div class="label">Tap to reveal</div>
+          </div>
+          <div class="card-face card-back">
+            <div class="content"></div>
+          </div>
+        </div>
+      </div>
+
+      <div class="card" tabindex="0" role="button" aria-pressed="false" data-index="4">
+        <div class="card-inner">
+          <div class="card-face card-front">
+            <div class="corner">★</div>
+            <div class="num">4</div>
+            <div class="label">Tap to reveal</div>
+          </div>
+          <div class="card-face card-back">
+            <div class="content"></div>
+          </div>
+        </div>
+      </div>
+
+      <div class="card" tabindex="0" role="button" aria-pressed="false" data-index="5">
+        <div class="card-inner">
+          <div class="card-face card-front">
+            <div class="corner">λ</div>
+            <div class="num">5</div>
+            <div class="label">Tap to reveal</div>
+          </div>
+          <div class="card-face card-back">
+            <div class="content"></div>
+          </div>
+        </div>
+      </div>
+
+      <div class="card" tabindex="0" role="button" aria-pressed="false" data-index="6">
+        <div class="card-inner">
+          <div class="card-face card-front">
+            <div class="corner">☼</div>
+            <div class="num">6</div>
+            <div class="label">Tap to reveal</div>
+          </div>
+          <div class="card-face card-back">
+            <div class="content"></div>
+          </div>
+        </div>
+      </div>
+
+      <div class="card" tabindex="0" role="button" aria-pressed="false" data-index="7">
+        <div class="card-inner">
+          <div class="card-face card-front">
+            <div class="corner">♛</div>
+            <div class="num">7</div>
+            <div class="label">Tap to reveal</div>
+          </div>
+          <div class="card-face card-back">
+            <div class="content"></div>
+          </div>
+        </div>
+      </div>
+
+      <div class="card" tabindex="0" role="button" aria-pressed="false" data-index="8">
+        <div class="card-inner">
+          <div class="card-face card-front">
+            <div class="corner">♪</div>
+            <div class="num">8</div>
+            <div class="label">Tap to reveal</div>
+          </div>
+          <div class="card-face card-back">
+            <div class="content"></div>
+          </div>
+        </div>
+      </div>
+
+      <div class="card" tabindex="0" role="button" aria-pressed="false" data-index="9">
+        <div class="card-inner">
+          <div class="card-face card-front">
+            <div class="corner">⚡</div>
+            <div class="num">9</div>
+            <div class="label">Tap to reveal</div>
+          </div>
+          <div class="card-face card-back">
+            <div class="content"></div>
+          </div>
+        </div>
+      </div>
+
+      <div class="card" tabindex="0" role="button" aria-pressed="false" data-index="10">
+        <div class="card-inner">
+          <div class="card-face card-front">
+            <div class="corner">☾</div>
+            <div class="num">10</div>
+            <div class="label">Tap to reveal</div>
+          </div>
+          <div class="card-face card-back">
+            <div class="content"></div>
+          </div>
+        </div>
+      </div>
+
+      <div class="card" tabindex="0" role="button" aria-pressed="false" data-index="11">
+        <div class="card-inner">
+          <div class="card-face card-front">
+            <div class="corner">✉</div>
+            <div class="num">11</div>
+            <div class="label">Tap to reveal</div>
+          </div>
+          <div class="card-face card-back">
+            <div class="content"></div>
+          </div>
+        </div>
+      </div>
+
+      <div class="card" tabindex="0" role="button" aria-pressed="false" data-index="12">
+        <div class="card-inner">
+          <div class="card-face card-front">
+            <div class="corner">∞</div>
+            <div class="num">12</div>
+            <div class="label">Tap to reveal</div>
+          </div>
+          <div class="card-face card-back">
+            <div class="content"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- decorative orbs -->
+  <div class="orb o1" aria-hidden="true"></div>
+  <div class="orb o2" aria-hidden="true"></div>
+
+<script>
+  (function(){
+    const cards = Array.from(document.querySelectorAll('.card'));
+    // add intro stagger
+    cards.forEach((c, i) => {
+      setTimeout(()=> c.classList.add('intro'), i * 80);
+    });
+
+    // click / keyboard flip handler
+    function toggle(card, byUser = true){
+      const is = card.classList.toggle('is-flipped');
+      card.setAttribute('aria-pressed', is ? 'true' : 'false');
+      // small tactile/visual push for flipped state
+      if(byUser){
+        // flash a tiny highlight on the back when opened
+        if(is){
+          const inner = card.querySelector('.card-inner');
+          inner.animate([{boxShadow:'0 20px 80px rgba(255,122,0,0.05)'},{boxShadow:'var(--shadow)'}], {duration:420, easing:'ease-out'});
+        }
+      }
+    }
+
+    cards.forEach(card => {
+      card.addEventListener('click', (e)=>{
+        // ignore clicks on selectable text etc
+        toggle(card, true);
+      });
+
+      card.addEventListener('keydown', (e)=>{
+        if(e.key === 'Enter' || e.key === ' '){
+          e.preventDefault();
+          toggle(card, true);
+        } else if (e.key === 'Escape'){
+          card.classList.remove('is-flipped');
+          card.setAttribute('aria-pressed', 'false');
+        }
+      });
+
+      // prevent accidental text selection on double-click
+      card.addEventListener('mousedown', (e) => e.preventDefault());
+    });
+
+    // OPTIONAL: Fill demo back content (comment out if you want empty back to paste your own)
+    const demoTexts = [
+      "I pull you close and kiss you deeply. Our tongues touch as I hold you tight. My hands move over your body, feeling your warmth. I say, 'You taste so good, I want more.'",
+      "Our kiss gets hotter. My hands go to your waist, then lower, touching your butt. You feel me hard against you. I kiss your neck, my fingers tease your thighs.",
+      "I slide my fingers up your thighs, feeling your soft skin. I touch your panties and feel how wet you are. I look in your eyes and see you want this. I say, 'You're so wet for me, aren't you?",
+      "I move my fingers under your panties, feeling your heat. I find your special spot and rub it gently. You gasp, your body shakes with want. I kiss you deeply as I touch you, feeling you move against my hand.",
+      "I put two fingers inside you, feeling how tight and wet you are. You moan, your body arches against mine. I move my fingers in and out, slow at first, then faster, matching our kisses. I feel your walls squeeze my fingers, and I know you're close.",
+      "I pull back to look in your eyes as I keep touching you. I want to see your pleasure. I say, 'Come for me, baby. Let me feel you cum on my fingers.'",
+      "You cry out as you cum, your body shakes around my fingers. I hold you close, feeling your fast heart and quick breaths. I kiss your face, savoring the moment as you calm down.",
+      "I sit you on my lap, feeling your wetness against my hardness. You start to move against me, slow and sensual. I groan, my hands hold your hips as I match your moves, feeling the heat build.",
+      "I lay you down, settling between your legs. I feel your heat against my cock, and I know I can't wait. I put myself at your entrance, looking in your eyes as I slowly push in. You gasp, your body stretches to take me.",
+      "I start to move, my hips push against yours in a steady beat. I feel your walls squeeze me, your body responds to every move. I lean down, kissing you deeply as we move together, our bodies in sync.",
+      "I feel my cum building, my body tensing to hold back. I reach between us, finding your special spot and rubbing it fast. You cry out, your body shakes around me as you cum again, and it sends me over the edge.",
+      "I push deep inside you, my body shakes as I cum, filling you with my release. I fall on top of you, my heart races and my breath comes fast. I kiss you softly, saying, 'I love you. You're everything to me.'"
+    ];
+
+    // If you want the backs to be empty, comment out this block
+    cards.forEach((card, i) => {
+      const content = card.querySelector('.content');
+      if(content && content.innerHTML.trim() === ""){
+        content.innerHTML = '<div style="padding:6px 4px;color:var(--muted);font-size:14px;">' + demoTexts[i % demoTexts.length] + '</div>';
+      }
+    });
+
+    // expose a small helper to set back text from console if needed
+    window.setCardText = function(index, html){
+      const c = cards[index-1];
+      if(!c) return;
+      const content = c.querySelector('.content');
+      content.innerHTML = html;
+    };
+
+  })();
+</script>
+</body>
+</html>
+    
+  </body>
+  
+</html>
